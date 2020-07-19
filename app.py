@@ -34,7 +34,7 @@ def main():
         st.success('CountPlot of People with Malignant VS Belign Cells According To Our Data Set')
         img = Image.open("countplot.png")
         st.image(img,width=430)
-        if st.sidebar.button("Area"):
+    if st.sidebar.button("Area"):
         st.success('Area of all the Parameters In our Data Set')
         img = Image.open("area.png")
         st.image(img,width=500)
