@@ -89,8 +89,6 @@ def main():
 
         if output ==1:
             st.markdown(danger_html,unsafe_allow_html=True)
-        elif mean_fractaldimension =="0.1587" or mean_compactness=="0.0651" or mean_radius=="7.76" or mean_radius=="16.60" or mean_area=="181" or mean_perimeter=="63.2" or mean_texture=="24.54":
-            st.markdown(danger_html,unsafe_allow_html=True)  
         else:
             st.markdown(safe_html,unsafe_allow_html=True)
             st.balloons()
@@ -101,8 +99,6 @@ def main():
 
         if output ==1:
             st.markdown(danger_html,unsafe_allow_html=True)
-        elif mean_fractaldimension =="0.1587" or mean_compactness=="0.0651" or mean_radius=="7.76" or mean_radius=="16.60" or mean_area=="181" or mean_perimeter=="63.2" or mean_texture=="24.54" :
-            st.markdown(danger_html,unsafe_allow_html=True)    
         else:
             st.markdown(safe_html,unsafe_allow_html=True)
             st.balloons()
