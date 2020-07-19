@@ -4,7 +4,6 @@ import numpy as np
 from PIL import Image
 
 model1=pickle.load(open('modelsvm.pkl','rb'))
-model2=pickle.load(open('modellr.pkl','rb'))
 model3=pickle.load(open('modeltree.pkl','rb'))
 model4=pickle.load(open('modelrf.pkl','rb'))
 
