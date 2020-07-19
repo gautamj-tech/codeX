@@ -27,7 +27,7 @@ def predict_cancer_rf(mean_radius,mean_texture,mean_perimeter,mean_area,mean_smo
     return float(pred)
 
 def main():
-    st.title("Built By CodeX MAIT")
+    st.title("Built by CodeX MAIT")
     status=st.sidebar.radio("Know About Our Model's",("Model 1","Model 2","Model 3"))
     if status=='Model 1':
         st.sidebar.success('Model 1 Is Made By using Support Vector Machines And Has Testing Accuracy of 0.913')
@@ -40,7 +40,7 @@ def main():
         st.success('Pair Plot Showing Relation Between Different Parameters Responsible For Breast Cancer According To Our Data Set')
         img = Image.open("pairplot.png")
         st.image(img,width=500)
-    if st.button("CountPlot)":
+    if st.button("CountPlot"):
         st.success('CountPlot of People with Malignant VS Belign Cells According To Our Data Set')
         img = Image.open("countplot.png")
         st.image(img,width=500)
