@@ -9,7 +9,7 @@ model4=pickle.load(open('modelrf.pkl','rb'))
 
 
 def predict_cancer_tree(mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension):
-    input=np.array([[mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension]])#.astype(np.float64)
+    input=np.array([[mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension]]).astype(np.float64)
     prediction=model3.predict(input)
     #pred=prediction
     pred='{0:.{1}f}'.format(prediction[0][0], 2)
