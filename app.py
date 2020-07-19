@@ -101,7 +101,7 @@ def main():
 
         if output ==1:
             st.markdown(danger_html,unsafe_allow_html=True)
-         elif mean_fractaldimension ==1.2 or mean_compactness==0.53 :
+        elif mean_fractaldimension ==1.2 or mean_compactness==0.53 :
             st.markdown(danger_html,unsafe_allow_html=True)    
         else:
             st.markdown(safe_html,unsafe_allow_html=True)
