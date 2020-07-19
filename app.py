@@ -34,6 +34,18 @@ def main():
         st.success('CountPlot of People with Malignant VS Belign Cells According To Our Data Set')
         img = Image.open("countplot.png")
         st.image(img,width=430)
+        if st.sidebar.button("Area"):
+        st.success('Area of all the Parameters In our Data Set')
+        img = Image.open("area.png")
+        st.image(img,width=500)
+    if st.sidebar.button("BoxPlot"):
+        st.success('Box Plot of All The Parameters In Our Data Set')
+        img = Image.open("box plot.png")
+        st.image(img,width=500)
+    if st.sidebar.button("Mean Radius"):
+        st.success('Density Distribution of Mean Radius')
+        img = Image.open("mean radius.png")
+        st.image(img,width=500)    
 
     html_temp = """
     <div style="background-color:#025246 ;padding:10px">
