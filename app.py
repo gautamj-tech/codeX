@@ -8,12 +8,6 @@ model3=pickle.load(open('modeltree.pkl','rb'))
 model4=pickle.load(open('modelrf.pkl','rb'))
 
 
-def predict_cancer_svm(mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension):
-    input=np.array([[mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension]])#.astype(np.float64)
-    prediction=model1.predict(input)
-    pred=prediction
-    return float(pred)
-
 def predict_cancer_tree(mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension):
     input=np.array([[mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension]])#.astype(np.float64)
     prediction=model3.predict(input)
@@ -27,13 +21,11 @@ def predict_cancer_rf(mean_radius,mean_texture,mean_perimeter,mean_area,mean_smo
 
 def main():
     st.title("Built by CodeX MAIT")
-    status=st.sidebar.radio("Know About Our Model's",("Model 1","Model 2","Model 3"))
-    if status=='Model 1':
-        st.sidebar.success('Model 1 Is Made By using Support Vector Machines And Has Testing Accuracy of 0.913')
+    status=st.sidebar.radio("Know About Our Model's",("Model 1","Model 2"))
+    if status == 'Model 1':
+        st.sidebar.info('Model 1 Is Made By using Decision Tree Classifier And Has Testing Accuracy of 0.932')
     if status == 'Model 2':
-        st.sidebar.info('Model 2 Is Made By using Decision Tree Classifier And Has Testing Accuracy of 0.932')
-    if status == 'Model 3':
-         st.sidebar.warning('Model 3 Is Made By Using Random Forest Classifier And Has Testing Accuracy of 0.967')
+         st.sidebar.warning('Model 2 Is Made By Using Random Forest Classifier And Has Testing Accuracy of 0.967')
     bar= st.sidebar.selectbox("Choose PLot", ["PairPlot", "CountPlot"])
     if st.sidebar.button("PairPlot"):
         st.success('Pair Plot Showing Relation Between Different Parameters Responsible For Breast Cancer According To Our Data Set')
@@ -68,40 +60,31 @@ def main():
 
     safe_html="""  
       <div style="background-color:#F4D03F;padding:10px >
-       <h2 style="color:white;text-align:center;"> Hey,You Are Not Diagnosed With Breast Cancer</h2>
+       <h2 style="color:white;text-align:center;"> You Are Not Diagnosed With Breast Cancer</h2>
        </div>
     """
     danger_html="""  
       <div style="background-color:#F08080;padding:10px >
-       <h2 style="color:red ;text-align:center;"> Hey ,You Are Diagnosed with Malignant Breast Cancer</h2>
+       <h2 style="color:red ;text-align:center;"> You Are Diagnosed with Malignant Breast Cancer</h2>
        </div>
     """
 
+    
+
+
     if st.button("Model 1"):
-        output=predict_cancer_svm(mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension)
-        st.success('')
+        output=predict_cancer_tree(mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension)
+        st.success("According To Model 1")
 
         if output ==1:
             st.markdown(danger_html,unsafe_allow_html=True)
-
         else:
             st.markdown(safe_html,unsafe_allow_html=True)
             st.balloons()
-
 
     if st.button("Model 2"):
-        output=predict_cancer_tree(mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension)
-        st.success('')
-
-        if output ==1:
-            st.markdown(danger_html,unsafe_allow_html=True)
-        else:
-            st.markdown(safe_html,unsafe_allow_html=True)
-            st.balloons()
-
-    if st.button("Model 3"):
         output=predict_cancer_rf(mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension)
-        st.success('')
+        st.success("According To Model 2")
 
         if output ==1:
             st.markdown(danger_html,unsafe_allow_html=True)
