@@ -26,15 +26,14 @@ def main():
         st.sidebar.info('Model 1 Is Made By using Decision Tree Classifier And Has Testing Accuracy of 0.932')
     if status == 'Model 2':
          st.sidebar.warning('Model 2 Is Made By Using Random Forest Classifier And Has Testing Accuracy of 0.967')
-    bar= st.sidebar.selectbox("Choose PLot", ["PairPlot", "CountPlot"])
     if st.sidebar.button("PairPlot"):
         st.success('Pair Plot Showing Relation Between Different Parameters Responsible For Breast Cancer According To Our Data Set')
         img = Image.open("pairplot.png")
-        st.image(img,width=500)
+        st.image(img,width=430)
     if st.sidebar.button("CountPlot"):
         st.success('CountPlot of People with Malignant VS Belign Cells According To Our Data Set')
         img = Image.open("countplot.png")
-        st.image(img,width=500)
+        st.image(img,width=430)
 
     html_temp = """
     <div style="background-color:#025246 ;padding:10px">
