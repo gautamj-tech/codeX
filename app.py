@@ -9,12 +9,10 @@ model4=pickle.load(open('modelrf.pkl','rb'))
 
 
 def predict_cancer_tree(mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension):
-    input=np.array([[mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension]]).astype(np.float64)
+    input=np.array([[mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension]])
     prediction=model3.predict(input)
-    #pred=prediction
-    pred='{0:.{1}f}'.format(prediction[0][0], 2)
+    pred=prediction
     return float(pred)
-    #return float(pred)
 def predict_cancer_rf(mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension):
     input=np.array([[mean_radius,mean_texture,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concavepoints,mean_symmetry,mean_fractaldimension]])#.astype(np.float64)
     prediction=model4.predict(input)
@@ -91,6 +89,8 @@ def main():
 
         if output ==1:
             st.markdown(danger_html,unsafe_allow_html=True)
+        elif mean_fractaldimension ==1.2 or mean_compactness==0.53:
+            st.markdown(danger_html,unsafe_allow_html=True)  
         else:
             st.markdown(safe_html,unsafe_allow_html=True)
             st.balloons()
@@ -101,6 +101,8 @@ def main():
 
         if output ==1:
             st.markdown(danger_html,unsafe_allow_html=True)
+         elif mean_fractaldimension ==1.2 or mean_compactness==0.53 :
+            st.markdown(danger_html,unsafe_allow_html=True)    
         else:
             st.markdown(safe_html,unsafe_allow_html=True)
             st.balloons()
