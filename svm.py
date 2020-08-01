@@ -1,39 +1,66 @@
 import pandas as pd
 import numpy as np
-from sklearn.datasets import load_breast_cancer
-cancer=load_breast_cancer()
 from sklearn.model_selection import train_test_split
-df1=pd.DataFrame(cancer['data'],columns=cancer['feature_names'])
-df1.drop(['worst radius','worst texture','worst perimeter','worst area','worst smoothness','worst compactness','worst concavity','worst concave points','worst symmetry','worst fractal dimension'],axis=1,inplace=True)
-df1.drop(['radius error','texture error','perimeter error','area error','smoothness error','compactness error','concavity error','concave points error','symmetry error','fractal dimension error'],axis=1,inplace=True)
-X=df1
-y=cancer['target']
-X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.3)
+df1=pd.read_csv('stopwords')
+b=[]
+def func(df1):
+    for i in df1['words']:
+        b.append(i)
+ func(df1)       
+import string
+df = pd.read_csv('emails.csv')
+def func(a):
+    t=a.split(':')[1]
+    t.lstrip()
+    a=t
+    return a
+df['message']=df['text'].apply(func)
+df.drop('text',axis=1,inplace=True)
+
+def text_process(mess):
+    """
+    Takes in a string of text, then performs the following:
+    1. Remove all punctuation
+    2. Remove all stopwords
+    3. Returns a list of the cleaned text
+    """
+    # Check characters to see if they are in punctuation
+    nopunc = [char for char in mess if char not in string.punctuation]
+
+    # Join the characters again to form the string.
+    nopunc = ''.join(nopunc)
+
+    # Now just remove any stopwords
+    return [word for word in nopunc.split() if word.lower() not in b]
+#messages['message'].head(5).apply(text_process)
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.naive_bayes import MultinomialNB
+
+from sklearn.pipeline import Pipeline
 from sklearn.svm import SVC
-from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import StandardScaler
-A=df1
-B=cancer['target']
-A_train , A_test , B_train , B_test = train_test_split(A,B, test_size = 0.25 , random_state = 0)
-sc = StandardScaler()
-A_train = sc.fit_transform(A_train)
-A_test = sc.fit_transform(A_test)
-log = LogisticRegression(random_state = 0)
-log.fit(A_train,B_train)
-tree = DecisionTreeClassifier(criterion = 'entropy' , random_state = 0)
-tree.fit(A_train, B_train)
-forest = RandomForestClassifier(n_estimators=10, criterion='entropy', random_state=0)
-forest.fit(A_train, B_train)
+param_grid = {'C': [0.1,1, 10, 100, 1000], 'gamma': [1,0.1,0.01,0.001,0.0001], 'kernel': ['rbf']}
 from sklearn.model_selection import GridSearchCV
-param={'C':[0.1,1,10,100,100],'gamma':[1,0.1,0.01,0.001,0.0001]}
-model=GridSearchCV(SVC(),param,verbose=3)
-model.fit(X_train,y_train)
-model.best_params_
-model.best_estimator_
+
+
+pipeline = Pipeline([
+    ('bow', CountVectorizer(analyzer=text_process)),  # strings to token integer counts
+    ('tfidf', TfidfTransformer()),  # integer counts to weighted TF-IDF scores
+    ('classifier', MultinomialNB()),  # train on TF-IDF vectors w/ Naive Bayes classifier
+])
+model = Pipeline([
+    ('bow', CountVectorizer(analyzer=text_process)),  
+    ('tfidf', TfidfTransformer()),
+    ('classifier',GridSearchCV(SVC(),param_grid,refit=True,verbose=3)),
+])
+
+
+msg_train,msg_test,label_train,label_test=train_test_split(df['message'],
+                                                           df['spam'],
+                                                          test_size=0.3)
+pipeline.fit(msg_train,label_train)
+model.fit(msg_train,label_train)
+predictions = pipeline.predict(msg_test)
 import pickle
-model.predict(X_test)
-pickle.dump(model,open('modelsvm.pkl','wb'))
-pickle.dump(tree,open('modeltree.pkl','wb'))
-pickle.dump(forest,open('modelrf.pkl','wb'))
+pickle.dump(pipeline,open('model.pkl','wb'))
+pickle.dump(model,open('model1.pkl','wb'))
